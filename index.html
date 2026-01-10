@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>The_McLaren415</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+* {
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Segoe UI', sans-serif;
+}
+
+/* ===== ЗАКАТ ИНТРО ===== */
+#intro {
+  position:fixed;
+  inset:0;
+  z-index:1000;
+  background: linear-gradient(180deg,
+    #ff9a3c,
+    #ff5f6d,
+    #6a0572,
+    #020024);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+  transition:opacity 1s ease, visibility 1s ease;
+}
+
+#intro h1 {
+  color:#fff;
+  font-size:2.6em;
+  letter-spacing:3px;
+  margin-bottom:25px;
+  text-shadow:0 0 25px #ffae00;
+}
+
+#enterBtn {
+  padding:16px 30px;
+  border-radius:30px;
+  background:rgba(255,255,255,0.15);
+  border:1px solid rgba(255,255,255,0.3);
+  color:#fff;
+  font-size:18px;
+  cursor:pointer;
+  backdrop-filter: blur(8px);
+  transition:0.3s;
+}
+#enterBtn:hover {
+  transform:scale(1.1);
+  background:rgba(255,255,255,0.25);
+}
+
+.hide {
+  opacity:0;
+  visibility:hidden;
+}
+
+/* ===== ОСНОВНОЙ ФОН ===== */
+body {
+  height:100vh;
+  overflow:hidden;
+  background: radial-gradient(circle at bottom, #0a2540, #020b16);
+  color:#eaf6ff;
+}
+
+/* Океан */
+.ocean {
+  position:absolute;
+  width:200%;
+  height:200%;
+  background: radial-gradient(circle at 50% 80%, #0d6efd33, #020b16 60%);
+  animation: drift 30s linear infinite;
+}
+@keyframes drift {
+  from { transform: translate(-25%, -25%) rotate(0deg); }
+  to { transform: translate(-25%, -25%) rotate(360deg); }
+}
+
+/* Частицы */
+.particle {
+  position:absolute;
+  width:4px;
+  height:4px;
+  background:#7fd7ff;
+  border-radius:50%;
+  opacity:0.6;
+  animation: float 8s linear infinite;
+}
+@keyframes float {
+  from { transform: translateY(110vh); }
+  to { transform: translateY(-10vh); }
+}
+
+/* Контент */
+.container {
+  position:relative;
+  z-index:2;
+  width:100%;
+  height:100%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.card {
+  width:90%;
+  max-width:520px;
+  background:rgba(5,20,40,0.55);
+  backdrop-filter: blur(12px);
+  border-radius:22px;
+  padding:30px;
+  box-shadow:0 0 40px #0d6efd22;
+  animation: fadeIn 1.2s ease;
+}
+@keyframes fadeIn {
+  from { opacity:0; transform: translateY(25px); }
+  to { opacity:1; transform: translateY(0); }
+}
+
+h2 {
+  text-align:center;
+  letter-spacing:2px;
+}
+
+.subtitle {
+  text-align:center;
+  opacity:0.8;
+  margin:10px 0 20px;
+}
+
+.list {
+  line-height:1.6;
+  font-size:0.95em;
+}
+
+.btn {
+  margin-top:20px;
+  padding:12px;
+  text-align:center;
+  border-radius:14px;
+  background:#0d6efd;
+  cursor:pointer;
+  transition:0.3s;
+}
+.btn:hover {
+  background:#66b2ff;
+  color:#001;
+}
+
+.hidden { display:none; }
+
+/* Просмотры */
+#views {
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  z-index:999;
+  background:rgba(10,40,80,0.6);
+  backdrop-filter: blur(8px);
+  padding:8px 14px;
+  border-radius:12px;
+  font-size:14px;
+}
+
+a {
+  color:#7fd7ff;
+  text-decoration:none;
+}
+a:hover { text-decoration:underline; }
+</style>
+</head>
+
+<body>
+
+<!-- ЗАКАТ ИНТРО -->
+<div id="intro">
+  <h1>The_McLaren415</h1>
+  <div id="enterBtn">Смотреть далее</div>
+</div>
+
+<!-- МУЗЫКА -->
+<audio id="bgMusic" loop preload="auto">
+  <source src="https://files.catbox.moe/1n8p6g.mp3" type="audio/mpeg">
+</audio>
+
+<div class="ocean"></div>
+<div id="views">👁 <span id="viewCount">0</span></div>
+
+<div class="container">
+
+<!-- СТРАНИЦА 1 -->
+<div class="card" id="page1">
+  <h2>The_McLaren415</h2>
+  <div class="subtitle">Discord.Python Coder</div>
+
+  <div class="list">
+    Python, C++, HTML, Luau, Java<br>
+    Работаем Братья 🇷🇺
+  </div>
+
+  <div class="btn" onclick="switchPage()">S Q U A D →</div>
+</div>
+
+<!-- СТРАНИЦА 2 -->
+<div class="card hidden" id="page2">
+  <h2>S Q U A D</h2>
+  <div class="subtitle">8 7 5 T E A M</div>
+
+  <div class="list">
+    ⩥ Комьюнити, помощь и игры<br>
+    ⩥ Roblox Studio, RP проекты<br>
+    ⩥ Сливы, залёты, разработка<br><br>
+    🔗 <a href="https://discord.gg/8UT5F5MncR" target="_blank">
+    discord.gg/8UT5F5MncR</a>
+  </div>
+
+  <div class="btn" onclick="switchPage()">← Назад</div>
+</div>
+
+</div>
+
+<script>
+/* Частицы */
+for (let i=0;i<40;i++){
+  const p=document.createElement("div");
+  p.className="particle";
+  p.style.left=Math.random()*100+"vw";
+  p.style.animationDuration=5+Math.random()*10+"s";
+  p.style.opacity=Math.random();
+  document.body.appendChild(p);
+}
+
+/* Переключение страниц */
+function switchPage(){
+  page1.classList.toggle("hidden");
+  page2.classList.toggle("hidden");
+}
+
+/* Интро + музыка */
+const intro = document.getElementById("intro");
+const enterBtn = document.getElementById("enterBtn");
+const music = document.getElementById("bgMusic");
+
+enterBtn.onclick = () => {
+  music.volume = 0.25;
+  music.play();
+  intro.classList.add("hide");
+};
+
+/* Счётчик просмотров (локальный) */
+let views = localStorage.getItem("views") || 0;
+views++;
+localStorage.setItem("views", views);
+document.getElementById("viewCount").textContent = views;
+</script>
+
+</body>
+</html>
