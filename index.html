@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>The_McLaren415</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Segoe UI,sans-serif}
+
+body{
+  height:100vh;
+  overflow:hidden;
+  color:#eaf6ff;
+}
+
+/* ===== BEACH BACKGROUND ===== */
+#bg{
+  position:fixed;
+  inset:0;
+  background:
+    linear-gradient(to top, #012a4a 20%, #014f86 45%, #2a9df4 70%, #87ceeb 100%);
+  z-index:-3;
+}
+
+/* WAVES */
+.wave{
+  position:absolute;
+  bottom:0;
+  width:200%;
+  height:180px;
+  background:rgba(255,255,255,0.15);
+  border-radius:100% 100% 0 0;
+  animation:waveMove 12s linear infinite;
+}
+.wave:nth-child(2){
+  bottom:40px;
+  opacity:.4;
+  animation-duration:18s;
+}
+@keyframes waveMove{
+  from{transform:translateX(0)}
+  to{transform:translateX(-50%)}
+}
+
+/* ===== INTRO ===== */
+#intro{
+  position:fixed;
+  inset:0;
+  background:linear-gradient(180deg,#ff9a3c,#ff5f6d,#6a0572,#020024);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
+  transition:opacity 1s ease;
+}
+#intro.hide{opacity:0;pointer-events:none}
+#enterBtn{
+  padding:16px 34px;
+  font-size:18px;
+  border:none;
+  border-radius:30px;
+  background:rgba(255,255,255,0.25);
+  color:#fff;
+  cursor:pointer;
+}
+
+/* ===== CONTENT ===== */
+.container{
+  height:100%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.card{
+  width:90%;
+  max-width:520px;
+  background:rgba(5,20,40,.6);
+  backdrop-filter:blur(14px);
+  border-radius:22px;
+  padding:30px;
+  box-shadow:0 0 40px #0d6efd44;
+}
+
+.hidden{display:none}
+h2{text-align:center}
+.subtitle{text-align:center;opacity:.8;margin:10px 0 20px}
+.list{line-height:1.6}
+
+.btn{
+  margin-top:20px;
+  padding:14px;
+  text-align:center;
+  background:#0d6efd;
+  border-radius:14px;
+  cursor:pointer;
+}
+.btn:hover{background:#66b2ff;color:#001}
+
+a{color:#7fd7ff;text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* ===== EYES ===== */
+#views{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  background:rgba(10,40,80,.6);
+  padding:10px 16px;
+  border-radius:14px;
+  font-size:14px;
+  animation:pulse 2s infinite;
+}
+@keyframes pulse{
+  0%,100%{transform:scale(1)}
+  50%{transform:scale(1.15)}
+}
+.eye{
+  display:inline-block;
+  margin-right:6px;
+  animation:blink 4s infinite;
+}
+@keyframes blink{
+  0%,90%,100%{transform:scaleY(1)}
+  95%{transform:scaleY(.1)}
+}
+</style>
+</head>
+
+<body>
+
+<div id="bg">
+  <div class="wave"></div>
+  <div class="wave"></div>
+</div>
+
+<!-- INTRO -->
+<div id="intro">
+  <h1>The_McLaren415</h1>
+  <button id="enterBtn">Смотреть далее</button>
+</div>
+
+<!-- MUSIC -->
+<audio id="music" loop>
+  <source src="music/po-kajfu.mp3" type="audio/mpeg">
+</audio>
+
+<!-- VIEWS -->
+<div id="views">
+  <span class="eye">👁</span>
+  <span id="viewCount">0</span>
+</div>
+
+<div class="container">
+
+<!-- PAGE 1 -->
+<div class="card" id="page1">
+  <h2>The_McLaren415</h2>
+  <div class="subtitle">Discord.Python Coder</div>
+  <div class="list">
+    Python, C++, HTML, Luau, Java<br>
+    Работаем Братья 🇷🇺
+  </div>
+  <div class="btn" onclick="showSquad()">S Q U A D →</div>
+</div>
+
+<!-- PAGE 2 -->
+<div class="card hidden" id="page2">
+  <h2>S Q U A D</h2>
+  <div class="subtitle">8 7 5 T E A M</div>
+  <div class="list">
+⩥ Привет Друг! Ты ищешь классное комьюнити?<br>
+⩥ Наш сервер — помощь и актив<br>
+⩥ Roblox Studio, RP проекты<br>
+⩥ Разработка, сливы, игры<br><br>
+🔗 <a href="https://discord.gg/8UT5F5MncR" target="_blank">
+discord.gg/8UT5F5MncR</a>
+  </div>
+  <div class="btn" onclick="back()">← Назад</div>
+</div>
+
+</div>
+
+<script>
+/* INTRO + MUSIC */
+const btn=document.getElementById("enterBtn");
+const music=document.getElementById("music");
+btn.onclick=()=>{
+  music.volume=0.3;
+  music.play();
+  document.getElementById("intro").classList.add("hide");
+  updateViews();
+};
+
+/* PAGES */
+const page1=document.getElementById("page1");
+const page2=document.getElementById("page2");
+function showSquad(){page1.classList.add("hidden");page2.classList.remove("hidden");}
+function back(){page2.classList.add("hidden");page1.classList.remove("hidden");}
+
+/* VIEWS (1 В ДЕНЬ) */
+const key="views_415";
+const today=new Date().toDateString();
+function updateViews(){
+  if(localStorage.getItem("day")!==today){
+    localStorage.setItem(key,(+localStorage.getItem(key)||0)+1);
+    localStorage.setItem("day",today);
+  }
+  document.getElementById("viewCount").textContent=localStorage.getItem(key);
+}
+</script>
+
+</body>
+</html>
