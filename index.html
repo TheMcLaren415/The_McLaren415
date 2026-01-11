@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>The_McLaren415</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Segoe UI,sans-serif}
+#intro{position:fixed;inset:0;background:linear-gradient(180deg,#ff9a3c,#ff5f6d,#6a0572,#020024);display:flex;flex-direction:column;justify-content:center;align-items:center;z-index:9999}
+#enterBtn{padding:16px 30px;font-size:18px;border-radius:30px;border:none;cursor:pointer;background:rgba(255,255,255,0.2);color:#fff}
+body{height:100vh;background:#020b16;color:#eaf6ff}
+.container{display:flex;justify-content:center;align-items:center;height:100%}
+.card{background:rgba(5,20,40,.6);padding:30px;border-radius:20px}
+</style>
+</head>
+<body>
+<div id="intro">
+  <h1>The_McLaren415</h1>
+  <button id="enterBtn">Смотреть далее</button>
+</div>
+
+<audio id="music" loop>
+  <source src="music/po-kajfu.wav" type="audio/wav">
+</audio>
+
+<div class="container">
+  <div class="card">
+    <h2>Работаем Братья 🇷🇺</h2>
+    <p>Python, C++, HTML, Luau, Java</p>
+  </div>
+</div>
+
+<script>
+const btn=document.getElementById('enterBtn');
+const music=document.getElementById('music');
+btn.onclick=()=>{
+  music.volume=0.3;
+  music.play();
+  document.getElementById('intro').style.display='none';
+};
+</script>
+</body>
+</html>
